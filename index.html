@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>📈 全球智能選股推薦 - 含消息面與技術面分析</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        header {
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-size: 2.2em;
+            margin: 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        p.subtitle {
+            margin: 10px 0;
+            opacity: 0.9;
+        }
+
+        /* 分頁標籤 */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+        .tab {
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+        .tab.active {
+            background: #fff;
+            color: #2a5298;
+        }
+
+        /* 內容區塊 */
+        .content {
+            display: none;
+            padding: 20px;
+        }
+        .content.active {
+            display: block;
+        }
+
+        /* 股票卡片容器 */
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            width: 260px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        .stock-code {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #ffeb3b;
+        }
+        .company-name {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+        .stock-price {
+            font-size: 1.2em;
+            color: #0f0;
+            font-weight: bold;
+            margin: 8px 0;
+        }
+        .price-change {
+            font-size: 0.9em;
+            color: #ff6b6b;
+        }
+
+        /* 新增：分點樣式 */
+        .reason-list {
+            text-align: left;
+            font-size: 0.9em;
+            line-height: 1.6;
+            background: rgba(255,255,255,0.2);
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            color: #fff;
+        }
+        .reason-item {
+            margin: 6px 0;
+        }
+        .reason-label {
+            font-weight: bold;
+            color: #8effe6;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 25px;
+            font-size: 1em;
+            background: #ffeb3b;
+            color: #333;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255,235,59,0.4);
+        }
+        button:hover {
+            background: #fdd835;
+        }
+        footer {
+            margin-top: 60px;
+            padding: 20px;
+            font-size: 0.8em;
+            color: rgba(255,255,255,0.7);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>📈 全球智能選股推薦</h1>
+        <p class="subtitle">含消息面・技術面分析｜每日更新</p>
+    </header>
+
+    <!-- 分頁標籤 -->
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('us')">🇺🇸 美股</div>
+        <div class="tab" onclick="showTab('cn')">🇨🇳 A股</div>
+        <div class="tab" onclick="showTab('hk')">🇭🇰 港股</div>
+    </div>
+
+    <!-- 美股內容 -->
+    <div id="us" class="content active">
+        <div class="card-container">
+            <div class="card">
+                <div class="stock-code">AAPL</div>
+                <div class="company-name">Apple</div>
+                <div class="stock-price">USD $198.50</div>
+                <div class="price-change">▲ +2.3%</div>
+                <div class="reason-list">
+                    <div class="reason-item"><span class="reason-label">🔹 消息面：</span>iPhone Q3銷售預期上調，AI功能將整合至iOS 18。</div>
+                    <div class="reason-item"><span class="reason-label">🔹 技術面：</span>日K線形成黃金交叉，外資連三日買超。</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="stock-code">NVDA</div>
+                <div class="company-name">NVIDIA</div>
+                <div class="stock-price">USD $935.80</div>
+                <div class="price-change">▲ +4.1%</div>
+                <div class="reason-list">
+                    <div class="reason-item"><span class="reason-label">🔹 消息面：</span>資料中心營收暴增，新晶片訂單滿載。</div>
+                    <div class="reason-item"><span class="reason-label">🔹 技術面：</span>突破$900壓力關卡，成交量創歷史新高。</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="stock-code">TSLA</div>
+                <div class="company-name">Tesla</div>
+                <div class="stock-price">USD $182.40</div>
+                <div class="price-change">▼ -0.8%</div>
+                <div class="reason-list">
+                    <div class="reason-item"><span class="reason-label">🔹 消息面：</span>自動駕駛FSD v12推送加速，德國工廠產能恢復。</div>
+                    <div class="reason-item"><span class="reason-label">🔹 技術面：</span>RSI脫離超賣區，短線資金開始回流。</div>
+                </div>
+            </div>
+        </div>
+        <button onclick="alert('正在分析美股最新數據...\n\n✅ 更新完成！')">
+            🔍 更新美股推薦
+        </button>
+    </div>
+
+    <!-- A股內容 -->
+    <div id="cn" class="content">
+        <div class="card-container">
+            <div class="card">
+                <div class="stock-code">600519</div>
+                <div class="company-name">貴州茅臺</div>
+                <div class="stock-price">CNY ¥1,725.00</div>
+                <div class="price-change">▲ +1.2%</div>
+                <div class="reason-list">
+                    <div class="reason-item"><span class="reason-label">🔹 消息面：</span>中秋節前備貨需求強勁，渠道批發價回升。</div>
+                    <div class="reason-item"><span class="reason-label">🔹 技術面：</span>站穩60日均線，MACD翻紅，多頭訊號出現。</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="stock-code">601318</div>
+                <div class="company-name">中國平安</div>
+                <div class="stock-price">CNY ¥48.60</div>
+                <div class="price-change">▲ +0.9%</div>
+                <div class="reason-list">
+                    <div class="reason-item"><span class="reason-label">🔹 消息面：</span>壽險業務保費增長轉正，股息率達5.2%。</div>
+                    <div class="reason-item"><span class="reason-label">🔹 技術面：</span>月線級別底背離，外資持續加倉。</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="stock-code">300750</div>
+                <div class="company-name">寧德時代</div>
+                <div class="stock-price">CNY ¥183.40</div>
+                <div class="price-change">▼ -0.5%</div>
+                <div class="reason-list">
+                    <div class="reason-item"><span class="reason-label">🔹 消息面：</span>獲特斯拉新款電動車電池訂單，市占率提升。</div>
+                    <div class="reason-item"><span class="reason-label">🔹 技術面：</span>日K線突破下降趨勢線，量能溫和放大。</div>
+                </div>
+            </div>
+        </div>
+        <button onclick="alert('正在分析A股最新數據...\n\n✅ 更新完成！')">
+            🔍 更新A股推薦
+        </button>
+    </div>
+
+    <!-- 港股內容 -->
+    <div id="hk" class="content">
+        <div class="card-container">
+            <div class="card">
+                <div class="stock-code">0981</div>
+                <div class="company-name">中芯國際</div>
+                <div class="stock-price">HKD $18.40</div>
+                <div class="price-change">▲ +2.8%</div>
+                <div class="reason-list">
+                    <div class="reason-item"><span class="reason-label">🔹 消息面：</span>國產替代政策加碼，成熟製程訂單爆滿。</div>
+                    <div class="reason-item"><span class="reason-label">🔹 技術面：</span>周K線連三週收紅，KD指標進入多頭區。</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="stock-code">0700</div>
+                <div class="company-name">騰訊控股</div>
+                <div class="stock-price">HKD $385.00</div>
+                <div class="price-change">▲ +1.5%</div>
+                <div class="reason-list">
+                    <div class="reason-item"><span class="reason-label">🔹 消息面：</span>遊戲版號通過，視頻號廣告收入年增60%。</div>
+                    <div class="reason-item"><span class="reason-label">🔹 技術面：</span>股價突破半年線，融資餘額連續上升。</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="stock-code">3690</div>
+                <div class="company-name">美團</div>
+                <div class="stock-price">HKD $128.60</div>
+                <div class="price-change">▲ +0.7%</div>
+                <div class="reason-list">
+                    <div class="reason-item"><span class="reason-label">🔹 消息面：</span>暑期消費熱潮帶動外賣訂單，降本成效顯著。</div>
+                    <div class="reason-item"><span class="reason-label">🔹 技術面：</span>日K線形成雙底反轉，成交量配合放大。</div>
+                </div>
+            </div>
+        </div>
+        <button onclick="alert('正在分析港股最新數據...\n\n✅ 更新完成！')">
+            🔍 更新港股推薦
+        </button>
+    </div>
+
+    <footer>
+        免責聲明：本網站所提供之資訊僅供參考，不構成任何投資建議。投資有風險，入市需謹慎。<br>
+        數據更新時間：<span id="time"></span>
+        <br>© 2025 全球智能選股推薦系統 | 版權所有
+    </footer>
+
+    <script>
+        // 切換分頁
+        function showTab(tabName) {
+            document.querySelectorAll('.content').forEach(div => div.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            document.querySelector(`[onclick="showTab('${tabName}')"]`).classList.add('active');
+        }
+
+        // 顯示時間
+        document.getElementById("time").textContent = new Date().toLocaleString('zh-TW');
+    </script>
+
+</body>
+</html>
